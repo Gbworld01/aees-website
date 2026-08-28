@@ -32,7 +32,7 @@ That's it — form submissions will now email straight to your inbox. Formspree'
 
 Search each HTML file for these and update them if needed:
 - Phone: `+234 706 269 2654` (from your logo)
-- Email: `hello@aees.ng` (placeholder — replace with your real email everywhere it appears)
+- Email: `aees.services@gmail.com` (placeholder — replace with your real email everywhere it appears)
 
 ---
 
