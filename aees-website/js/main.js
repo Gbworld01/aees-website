@@ -104,7 +104,7 @@ function initAppointmentForm() {
   const form = document.getElementById('appointment-form');
   if (!form) return;
 
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/myeyjzww'; // <-- replace with your real endpoint
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/moeqwvre'; // <-- replace with your real endpoint
 
   const status = document.getElementById('form-status');
   const submitBtn = form.querySelector('button[type="submit"]');
