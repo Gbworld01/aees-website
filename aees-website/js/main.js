@@ -9,7 +9,22 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initActiveLink();
   initAppointmentForm();
+  revealHashTargetImmediately();
 });
+
+/* If the page loads directly on a #section link (e.g. clicking "Solutions"
+   from another page), the browser jumps straight there before the scroll
+   animation would normally trigger, leaving that section stuck at low
+   opacity. Force it visible right away in that case. */
+function revealHashTargetImmediately() {
+  if (!location.hash) return;
+  const target = document.querySelector(location.hash);
+  if (!target) return;
+  if (target.hasAttribute('data-reveal') || target.hasAttribute('data-reveal-stagger')) {
+    target.classList.add('is-visible');
+  }
+  target.querySelectorAll('[data-reveal], [data-reveal-stagger]').forEach(el => el.classList.add('is-visible'));
+}
 
 /* Shrink / darken nav on scroll */
 function initNavScroll() {
@@ -61,9 +76,16 @@ function initScrollReveal() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
 
   targets.forEach(el => observer.observe(el));
+
+  // Safety net: if the page loads scrolled straight to an anchor (e.g. a link
+  // ending in #solutions), make sure nothing is left permanently faded out
+  // even if the observer never fires for it.
+  window.setTimeout(() => {
+    targets.forEach(el => el.classList.add('is-visible'));
+  }, 1200);
 }
 
 /* Highlight the current section link in the nav (home page only) */
@@ -104,7 +126,7 @@ function initAppointmentForm() {
   const form = document.getElementById('appointment-form');
   if (!form) return;
 
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/moeqwvre'; // <-- replace with your real endpoint
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'; // <-- replace with your real endpoint
 
   const status = document.getElementById('form-status');
   const submitBtn = form.querySelector('button[type="submit"]');
